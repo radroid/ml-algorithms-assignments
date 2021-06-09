@@ -14269,12 +14269,14 @@ a.anchor-link {
 <li><a href="#dataset-information">1. Dataset Information</a></li>
 <li><a href="#loading-data">2. Loading Data</a></li>
 <li><a href="#preprocessing-data">3. Pre-Processing Data</a></li>
-<li><a href="#modelling">4. Modelling</a><ul>
+<li><a href="#modelling">4. Modelling and Evaluation</a><ul>
 <li><a href="#standard-model">4.1 Standard Model</a></li>
+<li><a href="#create-pipeline">4.2 Create Pipeline</a></li>
+<li><a href="#model-analysis">4.3 Model Analysis - Learning Curve and Recall</a></li>
 <li><a href="#optimized-model">4.2 Optimized Model</a></li>
 </ul>
 </li>
-<li><a href="#model-evaluation">5. Model Evaluation</a></li>
+<li><a href="#feature-importance">5. Feature Importance</a></li>
 </ul>
 <hr>
 <p>Background for the dataset (source: <a href="https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-020-1023-5">BMC - Part of Springer Nature</a>):</p>
@@ -14859,9 +14861,9 @@ dtype: int64</pre>
 
 
 
-<div id="3dc26d28-aba9-4403-9807-b09d10509c57" class="jupyter-widgets jp-OutputArea-output ">
+<div id="f5f7a661-36f4-4dd8-9cba-9e13fd5daa1a" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('3dc26d28-aba9-4403-9807-b09d10509c57');
+var element = document.getElementById('f5f7a661-36f4-4dd8-9cba-9e13fd5daa1a');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "759098f9bd374a3bbb97482fee45a1e9", "version_major": 2, "version_minor": 0}
@@ -14881,9 +14883,9 @@ var element = document.getElementById('3dc26d28-aba9-4403-9807-b09d10509c57');
 
 
 
-<div id="82091556-e6f0-418e-a8af-94b5f6925782" class="jupyter-widgets jp-OutputArea-output ">
+<div id="86f10e02-32b1-476d-86a1-8a9e25fa8c41" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('82091556-e6f0-418e-a8af-94b5f6925782');
+var element = document.getElementById('86f10e02-32b1-476d-86a1-8a9e25fa8c41');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "31ee2e3b1dcc458087ba506e3070d613", "version_major": 2, "version_minor": 0}
@@ -14903,9 +14905,9 @@ var element = document.getElementById('82091556-e6f0-418e-a8af-94b5f6925782');
 
 
 
-<div id="6170f08c-db36-4037-ad65-c798ee07d749" class="jupyter-widgets jp-OutputArea-output ">
+<div id="5100e150-709e-4e0f-b8bd-4eb920fe6441" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('6170f08c-db36-4037-ad65-c798ee07d749');
+var element = document.getElementById('5100e150-709e-4e0f-b8bd-4eb920fe6441');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "b957159718184048be9362937e299ae3", "version_major": 2, "version_minor": 0}
@@ -14925,9 +14927,9 @@ var element = document.getElementById('6170f08c-db36-4037-ad65-c798ee07d749');
 
 
 
-<div id="3824b4f3-64a5-44c4-9f49-64396c4deb64" class="jupyter-widgets jp-OutputArea-output ">
+<div id="cd1d1967-a2c0-4109-9bee-07613ad650ee" class="jupyter-widgets jp-OutputArea-output ">
 <script type="text/javascript">
-var element = document.getElementById('3824b4f3-64a5-44c4-9f49-64396c4deb64');
+var element = document.getElementById('cd1d1967-a2c0-4109-9bee-07613ad650ee');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"model_id": "ee1e3ee60ba84137bd521f289386b970", "version_major": 2, "version_minor": 0}
@@ -15159,7 +15161,7 @@ Name: DEATH_EVENT, dtype: int64
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><a id="preprocessing-data"></a></p>
-<h1 id="Pre-Processing">Pre-Processing<a class="anchor-link" href="#Pre-Processing">&#182;</a></h1>
+<h1 id="3.-Pre-Processing">3. Pre-Processing<a class="anchor-link" href="#3.-Pre-Processing">&#182;</a></h1>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
@@ -15187,6 +15189,13 @@ Name: DEATH_EVENT, dtype: int64
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><a id="modelling"></a></p>
+<h1 id="4.-Modelling">4. Modelling<a class="anchor-link" href="#4.-Modelling">&#182;</a></h1><p><a id="standard-model"></a></p>
+<h2 id="4.1-Standard-Model">4.1 Standard Model<a class="anchor-link" href="#4.1-Standard-Model">&#182;</a></h2>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -15241,6 +15250,12 @@ weighted avg       0.73      0.73      0.73        60
 
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><a id="create-pipeline"></a></p>
+<h2 id="4.2-Create-Pipeline">4.2 Create Pipeline<a class="anchor-link" href="#4.2-Create-Pipeline">&#182;</a></h2>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -15272,6 +15287,12 @@ weighted avg       0.73      0.73      0.73        60
 </div>
 </div>
 
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><a id="model-analysis"></a></p>
+<h2 id="4.3-Model-Analysis---Learning-Curve-and-Recall">4.3 Model Analysis - Learning Curve and Recall<a class="anchor-link" href="#4.3-Model-Analysis---Learning-Curve-and-Recall">&#182;</a></h2>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -15417,13 +15438,6 @@ Average Variance: 0.06
 
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a id="modelling"></a></p>
-<h1 id="4.-Modelling">4. Modelling<a class="anchor-link" href="#4.-Modelling">&#182;</a></h1><p><a id="standard-model"></a></p>
-<h2 id="4.1-Standard-Model">4.1 Standard Model<a class="anchor-link" href="#4.1-Standard-Model">&#182;</a></h2>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
@@ -15507,7 +15521,7 @@ Logistic Regression 0.78 +/- 0.09
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><a id="optimized-model"></a></p>
-<h2 id="4.2-Optimized-Model">4.2 Optimized Model<a class="anchor-link" href="#4.2-Optimized-Model">&#182;</a></h2>
+<h2 id="4.4-Optimized-Model">4.4 Optimized Model<a class="anchor-link" href="#4.4-Optimized-Model">&#182;</a></h2>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
@@ -15672,8 +15686,8 @@ ROC Curve
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a id="model-evluation"></a></p>
-<h1 id="5.-Model-Evaluation">5. Model Evaluation<a class="anchor-link" href="#5.-Model-Evaluation">&#182;</a></h1>
+<p><a id="feature-importance"></a></p>
+<h1 id="5.-Feature-Importance">5. Feature Importance<a class="anchor-link" href="#5.-Feature-Importance">&#182;</a></h1>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
