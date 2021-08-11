@@ -43,8 +43,8 @@ def metric_evaluation(model, X, y, cv: int = 5, print_results: bool = True):
         performance_dict.update({metric: metric_score})
         
     performance_df = pd.DataFrame(performance_dict).round(3).T
-    performance_df.columns = [f"Cross Val {n}" for n in range(1, len(metric_score)+1)]
-    
+    performance_df.columns = [f"Fold {n}" for n in range(1, len(metric_score)+1)]
+
     # Instantiating figure
     fig, ax = plt.subplots(figsize=(10,7))
 
@@ -93,6 +93,9 @@ def plot_learning_curves(model, X, y):
         X (np.ndarray or pd.DataFrame): Contains the features from the dataset.
         y (np.ndarray or pd.DataFrame): Contains the target or response varible from the dataset.
     """
+    # Setting up random seed to ensure all models are evaluated on same data splits
+    np.random.seed(100)
+
     train_sizes, train_scores, test_scores = learning_curve(estimator=model,
                                                             X=X, 
                                                             y=y,
@@ -120,8 +123,8 @@ def plot_learning_curves(model, X, y):
     plt.show()
     
 
-def plot_box_plot(model, X, y, model_name: str = "Model", scoring: str = "recall_weighted",
-                  models: list = []):
+def plot_box_plot(model, X, y, cv: int = 5, model_name: str = "Model", scoring: str = "recall_weighted",
+                  models: list = None):
     """The function plots a box plot for the scoring parameter defined.
 
     Args:
@@ -132,8 +135,11 @@ def plot_box_plot(model, X, y, model_name: str = "Model", scoring: str = "recall
         scoring (str, optional): The scoring parameter to be used. Defaults to "recall_weighted".
         models (list, optional): A list of `model`s. Defaults to [].
     """
+    # Setting up random seed to ensure all models are evaluated on same data splits
+    np.random.seed(100)
 
-    if not models:
+    if models is None:
+        models = []
         models.append((model_name, model))
 
     results =[]
@@ -142,8 +148,8 @@ def plot_box_plot(model, X, y, model_name: str = "Model", scoring: str = "recall
     metric = scoring.replace('_', ' ').capitalize()
     print(f'Model Evaluation - {metric}')
     for name, model in models:
-        rkf = RepeatedKFold(n_splits=10, n_repeats=5, random_state=100)
-        cv_results = cross_val_score(model, X, y, cv=rkf, scoring=scoring)
+        # rkf = RepeatedKFold(n_splits=10, n_repeats=5, random_state=100)
+        cv_results = cross_val_score(model, X, y, cv=cv, scoring=scoring)
         results.append(cv_results)
         names.append(name)
         print('{} {:.2f} +/- {:.2f}'.format(name,cv_results.mean(),cv_results.std()))
@@ -160,14 +166,16 @@ def plot_box_plot(model, X, y, model_name: str = "Model", scoring: str = "recall
     pass
 
 
-def full_model_evaluation(model, X, y, model_name: str = None):
+def full_model_evaluation(model, X, y, cv: int = 5, model_name: str = None):
     """
     The function does the following 4 things:
     1. Plot the learning curve.
     2. Plot a boxplot for weighted recall.
     3. Plot the cross validation scores of 5 metrics.
     """
-    
+    # Setting up random seed to ensure all models are evaluated on same data splits
+    np.random.seed(100)
+
     if model_name is None:
         model_name = "Decision Tree"
 
@@ -176,7 +184,7 @@ def full_model_evaluation(model, X, y, model_name: str = None):
     plot_learning_curves(model, X, y)
     
     # Model Evaluation - Boxplot
-    plot_box_plot(model, X, y, model_name)
+    plot_box_plot(model, X, y, cv=cv, model_name=model_name)
     
     # Evaluate the performance
     metric_evaluation(model, X, y)
