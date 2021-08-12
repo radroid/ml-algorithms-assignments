@@ -1,0 +1,25 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="odor_n <= 0.21\ngini = 0.5\nsamples = 8124\nvalue = [4208, 3916]\nclass = p", fillcolor="#fdf6f1"] ;
+1 [label="stalk-root_c <= 0.7\ngini = 0.29\nsamples = 4596\nvalue = [800, 3796]\nclass = e", fillcolor="#63b2ea"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="bruises_f <= 0.25\ngini = 0.13\nsamples = 4048\nvalue = [288, 3760]\nclass = e", fillcolor="#48a5e7"] ;
+1 -> 2 ;
+3 [label="gini = 0.45\nsamples = 832\nvalue = [288, 544]\nclass = e", fillcolor="#a2d1f3"] ;
+2 -> 3 ;
+4 [label="gini = 0.0\nsamples = 3216\nvalue = [0, 3216]\nclass = e", fillcolor="#399de5"] ;
+2 -> 4 ;
+5 [label="gini = 0.12\nsamples = 548\nvalue = [512, 36]\nclass = p", fillcolor="#e78a47"] ;
+1 -> 5 ;
+6 [label="stalk-shape_t <= 0.6\ngini = 0.07\nsamples = 3528\nvalue = [3408, 120]\nclass = p", fillcolor="#e68540"] ;
+0 -> 6 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+7 [label="cap-surface_s <= 0.27\ngini = 0.21\nsamples = 1032\nvalue = [912, 120]\nclass = p", fillcolor="#e89253"] ;
+6 -> 7 ;
+8 [label="gini = 0.26\nsamples = 540\nvalue = [456, 84]\nclass = p", fillcolor="#ea985d"] ;
+7 -> 8 ;
+9 [label="gini = 0.14\nsamples = 492\nvalue = [456, 36]\nclass = p", fillcolor="#e78b49"] ;
+7 -> 9 ;
+10 [label="gini = 0.0\nsamples = 2496\nvalue = [2496, 0]\nclass = p", fillcolor="#e58139"] ;
+6 -> 10 ;
+}
