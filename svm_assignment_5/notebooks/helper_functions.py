@@ -259,4 +259,4 @@ def full_model_evaluation(model, X, y, cv: int = 5, model_name: str = None):
     plot_box_plot(model, X, y, cv=cv, model_name=model_name)
     
     # Evaluate the performance
-    metric_evaluation(model, X, y)
+    metric_evaluation(model, X, y, cv=cv)
