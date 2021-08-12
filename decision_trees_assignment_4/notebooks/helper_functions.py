@@ -7,6 +7,78 @@ from sklearn.model_selection import cross_val_score, learning_curve, RepeatedKFo
 from sklearn.metrics import classification_report, confusion_matrix, auc
 
 
+def plot_conf_mat(*all_conf_mat, **format_settings):
+    """Plots the confusion matrix using Seaborn Heatmap.
+    
+    Args:
+        all_conf_mat (args as ndarray or pandas dataframe): The confusion matrix generated using sklearn's method.
+        format_settings (keywords arguements): 
+            titles_list (list of str): Titles to be given to each of the plots.
+            cmaps_list (list of str): cmap value to decide the color for each of the plots 
+                                     (refer to Matplotlib for possible values).
+            num_of_rows (int): number of rows of the plots.
+            num_of_cols (int): number of columns of the plots.
+        
+    Returns: None
+    """
+    num_of_plots = len(all_conf_mat)
+    num_of_rows, num_of_cols = get_ideal_plot_dim(num_of_plots)
+
+    all_titles = format_settings.get("titles_list", ["Confusion Matrix"]*num_of_plots)
+    all_cmaps = format_settings.get("cmaps_list", ['Blues']*num_of_plots)
+    nrows = format_settings.get("nrows", num_of_rows)
+    ncols = format_settings.get("ncols", num_of_cols)
+    figsize = format_settings.get("figsize", (12, 4))
+    
+    fig, axes = plt.subplots(nrows=nrows,
+                             ncols=ncols,
+                             figsize=figsize)
+    if not type(axes) == np.ndarray:
+        axes = [axes]
+    
+    for ax, conf_mat, title, cmap in zip(axes, all_conf_mat, all_titles, all_cmaps):
+        sns.heatmap(conf_mat, 
+                    annot=True,
+                    annot_kws={'size': 12},
+                    cbar=False,
+                    cmap=cmap,
+                    ax=ax)
+
+        ax.set_title(title, fontdict={'size': 16, 'weight': 'bold'}, pad=30)
+        ax.set_xlabel('Predicted Label', fontdict={'size': 14, 'weight': 'bold'}, labelpad=20)
+        ax.set_ylabel('True Label', fontdict={'size': 14, 'weight': 'bold'}, labelpad=20)
+        
+        loc_x = ax.get_xticks()
+        loc_y = ax.get_yticks()
+        loc_y -= 0.3
+
+        ax.set_xticklabels(['Edible', 'Poisonuous'], fontdict={"fontsize": 14})
+        ax.set_yticks(loc_y)
+        ax.set_yticklabels(['Edible', 'Poisonuous'], fontdict={"fontsize": 14}, rotation=90)
+        
+    plt.tight_layout(rect=[0, 0.03, 1.1, 0.97])
+
+
+def get_ideal_plot_dim(total_plots):
+    """Calculated the best number of rows and columns to create plots clearly.
+    
+    Args:
+        total_plots (int): Total number of plots to be created.
+    
+    Returns:
+        nrows (int): Number of rows to be plot.
+        ncols (int): Number of columns to be plot.
+    """
+    nrows = 1
+    ncols = 3
+    if total_plots <= 3:
+        ncols = total_plots
+        return nrows, ncols
+    else:
+        nrows = round(total_plots / 3) + 2
+        return nrows, ncols
+
+
 def metric_evaluation(model, X, y, cv: int = 5, print_results: bool = True):
     """
     The function evalutes the model on five metrics using cross validation scores for each and plots them.
